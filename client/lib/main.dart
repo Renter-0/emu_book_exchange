@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 
 const jsonServer =
     "https://sunglasses-exotic-begun-assignments.trycloudflare.com/api";
+const accentColor = Color(0xFFCCE5E3);
+
 const server = "$jsonServer/image";
 
 
@@ -245,7 +247,7 @@ class _BookPageState extends State<BookPage> {
                       width: 179,
                       height: 55,
                       decoration: ShapeDecoration(
-                        color: const Color(0xFFCCE5E3),
+                        color: accentColor,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15),
                         ),
@@ -277,7 +279,7 @@ class _BookPageState extends State<BookPage> {
                     width: 179,
                     height: 55,
                     decoration: ShapeDecoration(
-                      color: const Color(0xFFCCE5E3),
+                      color: accentColor,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(15),
                       ),
@@ -667,7 +669,7 @@ class Footer extends StatelessWidget {
     final height = MediaQuery.sizeOf(context).height * 0.08;
     return Container(
       height: height,
-      color: const Color(0xFFCCE5E3),
+      color: accentColor,
       child: const Center(
         child: Text(
           'Book Exchange App',
@@ -688,7 +690,7 @@ class Header extends StatelessWidget {
 
     return Container(
       height: headerHeight,
-      color: const Color(0xFFCCE5E3),
+      color: accentColor,
       child: Padding(
         padding: EdgeInsets.fromLTRB(
           headerWidth * 0.05,
