@@ -426,79 +426,87 @@ class _MediumBookCardState extends State<MediumBookCard> {
       future: futureBook,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  BookCoverImage(
-                    imageId: snapshot.data!.bookId,
-                    width: 141,
-                    heigth: 177,
-                    withWishlist: true,
-                  ),
-                  // Book details' Box
-                  Container(
-                    width: 257,
-                    height: 127,
-                    decoration: ShapeDecoration(
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
+          return GestureDetector(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  children: [
+                    BookCoverImage(
+                      imageId: snapshot.data!.bookId,
+                      width: 141,
+                      heigth: 177,
+                      withWishlist: true,
+                    ),
+                    // Book details' Box
+                    Container(
+                      width: 257,
+                      height: 127,
+                      decoration: ShapeDecoration(
+                        color: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(20),
+                            bottomRight: Radius.circular(20),
+                          ),
                         ),
                       ),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      spacing: 1.5,
-                      children: [
-                        RegularText(text: snapshot.data!.title, fontSize: 16),
-                        Opacity(
-                          opacity: 0.70,
-                          child: RegularText(
-                            text: snapshot.data!.author,
-                            fontSize: 14,
-                          ),
-                        ),
-                        Opacity(
-                          opacity: 0.50,
-                          child: Container(
-                            width: 257,
-                            decoration: ShapeDecoration(
-                              shape: RoundedRectangleBorder(
-                                side: BorderSide(
-                                  width: 1,
-                                  strokeAlign: BorderSide.strokeAlignCenter,
-                                ),
-                              ),
-                              shadows: [
-                                BoxShadow(
-                                  color: Color(0x3F000000),
-                                  blurRadius: 4,
-                                  offset: Offset(0, 4),
-                                  spreadRadius: 0,
-                                ),
-                              ],
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        spacing: 1.5,
+                        children: [
+                          RegularText(text: snapshot.data!.title, fontSize: 16),
+                          Opacity(
+                            opacity: 0.70,
+                            child: RegularText(
+                              text: snapshot.data!.author,
+                              fontSize: 14,
                             ),
                           ),
-                        ),
-                        // TODO: Text should fill all the space it has. If text is bigger than container elipsis will be shown before the end
-                        Opacity(
-                          opacity: 0.70,
-                          child: RegularText(
-                            text: snapshot.data!.description,
-                            fontSize: 14,
+                          Opacity(
+                            opacity: 0.50,
+                            child: Container(
+                              width: 257,
+                              decoration: ShapeDecoration(
+                                shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                    width: 1,
+                                    strokeAlign: BorderSide.strokeAlignCenter,
+                                  ),
+                                ),
+                                shadows: [
+                                  BoxShadow(
+                                    color: Color(0x3F000000),
+                                    blurRadius: 4,
+                                    offset: Offset(0, 4),
+                                    spreadRadius: 0,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                          // TODO: Text should fill all the space it has. If text is bigger than container elipsis will be shown before the end
+                          Opacity(
+                            opacity: 0.70,
+                            child: RegularText(
+                              text: snapshot.data!.description,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 8),
-            ],
+                  ],
+                ),
+                const SizedBox(height: 8),
+              ],
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BookPage()),
+              );
+            },
           );
         } else if (snapshot.hasError) {
           return SnapshotErrorBox(error: snapshot.error!);
