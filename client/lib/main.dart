@@ -668,16 +668,7 @@ class Footer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.sizeOf(context).height * 0.08;
-    return Container(
-      height: height,
-      color: accentColor,
-      child: const Center(
-        child: Text(
-          'Book Exchange App',
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-        ),
-      ),
-    );
+    return Container(height: height, color: accentColor);
   }
 }
 
