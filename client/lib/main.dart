@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -32,6 +33,7 @@ Future<Book> fetchBook() async {
 
 class Book {
   final int bookId;
+  final int owner;
   final String title;
   final String author;
   final String category;
@@ -41,6 +43,7 @@ class Book {
 
   const Book({
     required this.bookId,
+    required this.owner,
     required this.title,
     required this.category,
     required this.price,
@@ -54,7 +57,7 @@ class Book {
     return switch (json) {
       {
         'id': int id,
-        'owner': int _,
+        'owner': int owner,
         'title': String title,
         'author': String author,
         'price': String price,
@@ -63,6 +66,7 @@ class Book {
         'condition': String condition,
       } =>
         Book(
+          owner: owner,
           title: title,
           bookId: id,
           price: price,
@@ -93,9 +97,233 @@ class BookExchangeApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: const Color(0xF7F7F7F7),
       ),
-      home: Scaffold(
-        body: SafeArea(child: ListView(children: [CatalogPage()])),
-      ),
+      home: Scaffold(body: SafeArea(child: ListView(children: [BookPage()]))),
+    );
+  }
+}
+
+class BookPage extends StatefulWidget {
+  const BookPage({super.key});
+
+  @override
+  State<BookPage> createState() => _BookPageState();
+}
+
+class _BookPageState extends State<BookPage> {
+  late Future<Book> futureBook;
+
+  @override
+  void initState() {
+    super.initState();
+    futureBook = delay();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<Book>(
+      future: futureBook,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Header(),
+              Container(
+                width: double.maxFinite,
+                height: MediaQuery.sizeOf(context).height * 0.6,
+                child: Stack(
+                  children: [
+                    // Blurred background
+                    Positioned.fill(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('images/dictator.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        child: ClipRRect(
+                          child: BackdropFilter(
+                            filter: ImageFilter.blur(sigmaY: 10, sigmaX: 10),
+                            child: Container(
+                              color: Colors.black.withOpacity(
+                                0.1,
+                              ), // Optional overlay
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Clear centered image
+                    Center(
+                      child: Container(
+                        width: 167,
+                        height: 281,
+                        decoration: ShapeDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('images/dictator.jpg'),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(width: 1),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          shadows: [
+                            BoxShadow(
+                              color: Color(0x66000000),
+                              blurRadius: 4,
+                              offset: Offset(0, 4),
+                              spreadRadius: 0,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Text(
+                          snapshot.data!.author,
+                          style: TextStyle(
+                            color: Colors.white, // or any other bright color
+                            shadows: [
+                              Shadow(
+                                blurRadius: 5,
+                                color: Colors.black, // or any other dark color
+                                offset: Offset(1, 1),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Row(
+                spacing: 8,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 25.0),
+                    child: Container(
+                      width: 179,
+                      height: 55,
+                      decoration: ShapeDecoration(
+                        color: const Color(0xFFCCE5E3),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Send exchange request to ${snapshot.data!.owner}',
+                            ),
+                          ),
+                          Container(
+                            height: 55,
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: BorderSide(
+                                  width: 1,
+                                  strokeAlign: BorderSide.strokeAlignCenter,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Icon(Icons.share),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 179,
+                    height: 55,
+                    decoration: ShapeDecoration(
+                      color: const Color(0xFFCCE5E3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(child: Text("Add to Wishlist")),
+                        Container(
+                          height: 55,
+                          decoration: ShapeDecoration(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(
+                                width: 1,
+                                strokeAlign: BorderSide.strokeAlignCenter,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Icon(Icons.star),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                width: 369,
+                height: 334,
+                decoration: ShapeDecoration(
+                  color: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20),
+                      bottomRight: Radius.circular(29),
+                    ),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Condition: ${snapshot.data!.condition}'),
+                    Text('Pages'),
+                    Text('Language:'),
+                    Text('Description:\n${snapshot.data!.description}'),
+                  ],
+                ),
+              ),
+            ],
+          );
+        } else if (snapshot.hasError) {
+          return Container(
+            width: 89,
+            height: 200,
+            padding: const EdgeInsets.all(8),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.error, color: Colors.red, size: 32),
+                const SizedBox(height: 8),
+                Text(
+                  'Error loading book',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.red[700], fontSize: 12),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  '${snapshot.error}',
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(color: Colors.grey, fontSize: 10),
+                ),
+              ],
+            ),
+          );
+        }
+        return const SizedBox(
+          width: 89,
+          height: 200,
+          child: Center(child: CircularProgressIndicator()),
+        );
+      },
     );
   }
 }
