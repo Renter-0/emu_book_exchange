@@ -581,19 +581,25 @@ class CatalogPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Header(),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
-        MediumBookCard(),
-        MediumBookCard(),
-        MediumBookCard(),
-        MediumBookCard(),
-        MediumBookCard(),
-        MediumBookCard(),
-        const Footer(),
-      ],
+    return Scaffold(
+      body: ListView(
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Header(),
+              SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
+              MediumBookCard(),
+              MediumBookCard(),
+              MediumBookCard(),
+              MediumBookCard(),
+              MediumBookCard(),
+              MediumBookCard(),
+              const Footer(),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }
