@@ -9,6 +9,41 @@ const jsonServer =
     "https://sunglasses-exotic-begun-assignments.trycloudflare.com/api";
 const server = "$jsonServer/image";
 
+
+class SnapshotErrorBox extends StatelessWidget {
+  final Object error;
+  const SnapshotErrorBox({super.key, required this.error});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 89,
+      height: 200,
+      padding: const EdgeInsets.all(8),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(Icons.error, color: Colors.red, size: 32),
+          const SizedBox(height: 8),
+          Text(
+            'Error loading book',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.red[700], fontSize: 12),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            error.toString(),
+            textAlign: TextAlign.center,
+            maxLines: 3,
+            overflow: TextOverflow.ellipsis,
+            style: const TextStyle(color: Colors.grey, fontSize: 10),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 Future<Book> fetchBook() async {
   try {
     final response = await http
@@ -292,31 +327,7 @@ class _BookPageState extends State<BookPage> {
             ],
           );
         } else if (snapshot.hasError) {
-          return Container(
-            width: 89,
-            height: 200,
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error, color: Colors.red, size: 32),
-                const SizedBox(height: 8),
-                Text(
-                  'Error loading book',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.red[700], fontSize: 12),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${snapshot.error}',
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey, fontSize: 10),
-                ),
-              ],
-            ),
-          );
+          return SnapshotErrorBox(error: snapshot.error!);
         }
         return const SizedBox(
           width: 89,
@@ -484,31 +495,7 @@ class _MediumBookCardState extends State<MediumBookCard> {
             ],
           );
         } else if (snapshot.hasError) {
-          return Container(
-            width: 89,
-            height: 200,
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error, color: Colors.red, size: 32),
-                const SizedBox(height: 8),
-                Text(
-                  'Error loading book',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.red[700], fontSize: 12),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${snapshot.error}',
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey, fontSize: 10),
-                ),
-              ],
-            ),
-          );
+          return SnapshotErrorBox(error: snapshot.error!);
         }
         return const SizedBox(
           width: 89,
@@ -841,31 +828,7 @@ class _SmallBookCardState extends State<SmallBookCard> {
             ),
           );
         } else if (snapshot.hasError) {
-          return Container(
-            width: 89,
-            height: 200,
-            padding: const EdgeInsets.all(8),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Icon(Icons.error, color: Colors.red, size: 32),
-                const SizedBox(height: 8),
-                Text(
-                  'Error loading book',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.red[700], fontSize: 12),
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  '${snapshot.error}',
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(color: Colors.grey, fontSize: 10),
-                ),
-              ],
-            ),
-          );
+          return SnapshotErrorBox(error: snapshot.error!);
         }
         return const SizedBox(
           width: 89,
