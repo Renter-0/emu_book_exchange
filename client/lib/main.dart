@@ -718,6 +718,7 @@ class Header extends StatelessWidget {
         ),
         child: Row(
           children: [
+            BackButton(),
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
