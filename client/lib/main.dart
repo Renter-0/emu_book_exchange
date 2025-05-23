@@ -773,25 +773,36 @@ class _SmallBookCardState extends State<SmallBookCard> {
       future: futureBook,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          return SizedBox(
-            width: 120,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                BookCoverImage(
-                  imageId: snapshot.data!.bookId,
-                  width: 89,
-                  heigth: 154,
-                ),
-                const SizedBox(height: 8),
-                RegularText(text: snapshot.data!.title, fontSize: 14),
-                const SizedBox(height: 4),
-                Opacity(
-                  opacity: 0.70,
-                  child: RegularText(text: snapshot.data!.author, fontSize: 12),
-                ),
-              ],
+          return GestureDetector(
+            child: SizedBox(
+              width: 120,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  BookCoverImage(
+                    imageId: snapshot.data!.bookId,
+                    width: 89,
+                    heigth: 154,
+                  ),
+                  const SizedBox(height: 8),
+                  RegularText(text: snapshot.data!.title, fontSize: 14),
+                  const SizedBox(height: 4),
+                  Opacity(
+                    opacity: 0.70,
+                    child: RegularText(
+                      text: snapshot.data!.author,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
+              ),
             ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BookPage()),
+              );
+            },
           );
         } else if (snapshot.hasError) {
           return SnapshotErrorBox(error: snapshot.error!);
