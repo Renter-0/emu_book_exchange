@@ -656,18 +656,26 @@ class LargeBookCard extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width * 0.9;
     final height = MediaQuery.sizeOf(context).height * 0.3;
 
-    return Stack(
-      alignment: Alignment.bottomLeft,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: BookCoverImage(heigth: height, width: width, imageId: 1),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: width * 0.1),
-          child: OnImageText(text: 'Book 1', fontSize: 16),
-        ),
-      ],
+    return GestureDetector(
+      child: Stack(
+        alignment: Alignment.bottomLeft,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: BookCoverImage(heigth: height, width: width, imageId: 1),
+          ),
+          Padding(
+            padding: EdgeInsets.only(left: width * 0.1),
+            child: OnImageText(text: 'Book 1', fontSize: 16),
+          ),
+        ],
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BookPage()),
+        );
+      },
     );
   }
 }
