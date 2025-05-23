@@ -738,7 +738,13 @@ class Header extends StatelessWidget {
                     ),
                   ],
                 ),
-                child: const TextField(
+                child: TextField(
+                  onSubmitted: (String value) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => CatalogPage()),
+                    );
+                  },
                   style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.search, color: Colors.grey),
