@@ -193,27 +193,10 @@ class _BookPageState extends State<BookPage> {
                     ),
                     // Clear centered image
                     Center(
-                      child: Container(
+                      child: BookCoverImage(
+                        imageId: snapshot.data!.bookId,
                         width: 167,
-                        height: 281,
-                        decoration: ShapeDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('images/dictator.jpg'),
-                            fit: BoxFit.cover,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(width: 1),
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          shadows: [
-                            BoxShadow(
-                              color: Color(0x66000000),
-                              blurRadius: 4,
-                              offset: Offset(0, 4),
-                              spreadRadius: 0,
-                            ),
-                          ],
-                        ),
+                        heigth: 281,
                       ),
                     ),
                     Align(
@@ -373,39 +356,11 @@ class _MediumBookCardState extends State<MediumBookCard> {
             children: [
               Row(
                 children: [
-                  // Image Box
-                  Container(
+                  BookCoverImage(
+                    imageId: snapshot.data!.bookId,
                     width: 141,
-                    height: 177,
-                    decoration: ShapeDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage('$server/${snapshot.data!.bookId}'),
-                        fit: BoxFit.cover,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      shadows: const [
-                        BoxShadow(
-                          color: Color(0x3F000000),
-                          blurRadius: 4,
-                          offset: Offset(0, 4),
-                          spreadRadius: 0,
-                        ),
-                      ],
-                    ),
-                    child: Align(
-                      alignment: Alignment(0.9, -0.8),
-                      child: Container(
-                        width: 25,
-                        height: 25,
-                        decoration: ShapeDecoration(
-                          color: Colors.white,
-                          shape: CircleBorder(),
-                        ),
-                        child: Icon(Icons.star, color: Colors.yellow, size: 15),
-                      ),
-                    ),
+                    heigth: 177,
+                    withWishlist: true,
                   ),
                   // Book details' Box
                   Container(
@@ -505,6 +460,61 @@ class _MediumBookCardState extends State<MediumBookCard> {
           child: Center(child: CircularProgressIndicator()),
         );
       },
+    );
+  }
+}
+
+class BookCoverImage extends StatelessWidget {
+  final int imageId;
+  final double width;
+  final double heigth;
+  final bool withWishlist;
+  const BookCoverImage({
+    super.key,
+    required this.imageId,
+    required this.width,
+    required this.heigth,
+    this.withWishlist = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: width,
+      height: heigth,
+      decoration: ShapeDecoration(
+        image: DecorationImage(
+          image: NetworkImage('$server/$imageId'),
+          fit: BoxFit.cover,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+          side: BorderSide(width: 1),
+        ),
+        shadows: const [
+          BoxShadow(
+            color: Color(0x3F000000),
+            blurRadius: 4,
+            offset: Offset(0, 4),
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child:
+          withWishlist
+              ? Align(
+                alignment: Alignment(0.9, -0.8),
+                child: Container(
+                  width: 25,
+                  height: 25,
+                  decoration: ShapeDecoration(
+                    color: Colors.white,
+                    shape: CircleBorder(),
+                  ),
+                  child: Icon(Icons.star, color: Colors.yellow, size: 15),
+                ),
+              )
+              : null,
     );
   }
 }
@@ -615,48 +625,27 @@ class LargeBookCard extends StatelessWidget {
     final width = MediaQuery.sizeOf(context).width * 0.9;
     final height = MediaQuery.sizeOf(context).height * 0.3;
 
-    return Center(
-      child: Container(
-        width: width,
-        height: height,
-        decoration: ShapeDecoration(
-          image: const DecorationImage(
-            image: NetworkImage('$server/1'),
-            fit: BoxFit.cover,
-          ),
-          color: const Color(0xFFD9D9D9),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
-          ),
+    return Stack(
+      alignment: Alignment.bottomLeft,
+      children: [
+        Align(
+          alignment: Alignment.center,
+          child: BookCoverImage(heigth: height, width: width, imageId: 1),
         ),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(40),
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.transparent, Colors.black.withOpacity(0.7)],
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: height * 0.75,
-              left: width * 0.05,
-              right: width * 0.05,
-            ),
-            child: const Text(
-              'Book Name - Owner',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 16,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w600,
-              ),
+        Padding(
+          padding: EdgeInsets.only(left: width * 0.1),
+          child: const Text(
+            'Book Name - Owner',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }
@@ -776,26 +765,10 @@ class _SmallBookCardState extends State<SmallBookCard> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
+                BookCoverImage(
+                  imageId: snapshot.data!.bookId,
                   width: 89,
-                  height: 154,
-                  decoration: ShapeDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage('$server/${snapshot.data!.bookId}'),
-                      fit: BoxFit.cover,
-                    ),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    shadows: const [
-                      BoxShadow(
-                        color: Color(0x3F000000),
-                        blurRadius: 4,
-                        offset: Offset(0, 4),
-                        spreadRadius: 0,
-                      ),
-                    ],
-                  ),
+                  heigth: 154,
                 ),
                 const SizedBox(height: 8),
                 Text(
