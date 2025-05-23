@@ -12,6 +12,73 @@ const accentColor = Color(0xFFCCE5E3);
 const server = "$jsonServer/image";
 
 
+/// Custom Text Widgets
+
+/// Styled to be visible on different backgrounds
+class OnImageText extends StatelessWidget {
+  final String text;
+  final double? fontSize;
+  const OnImageText({super.key, required this.text, this.fontSize});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: TextStyle(
+        fontFamily: 'Inter',
+        fontSize: fontSize,
+        color: Colors.white,
+        shadows: [
+          Shadow(blurRadius: 5, color: Colors.black, offset: Offset(1, 1)),
+        ],
+      ),
+    );
+  }
+}
+
+/// Text that is used to mark important/big sections
+class SectionText extends StatelessWidget {
+  final String text;
+  const SectionText({super.key, required this.text});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.left,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: MediaQuery.sizeOf(context).width * 0.05,
+        fontFamily: 'Instrument Sans',
+        fontWeight: FontWeight.w700,
+      ),
+    );
+  }
+}
+
+/// Text configured to be used in other parts of the app
+class RegularText extends StatelessWidget {
+  final String text;
+  final double? fontSize;
+  const RegularText({super.key, required this.text, this.fontSize});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      textAlign: TextAlign.left,
+      maxLines: 2,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        color: Colors.black,
+        fontSize: fontSize,
+        fontFamily: 'Inter',
+        fontWeight: FontWeight.w500,
+      ),
+    );
+  }
+}
+
 class SnapshotErrorBox extends StatelessWidget {
   final Object error;
   const SnapshotErrorBox({super.key, required this.error});
@@ -203,18 +270,9 @@ class _BookPageState extends State<BookPage> {
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 20.0),
-                        child: Text(
-                          snapshot.data!.author,
-                          style: TextStyle(
-                            color: Colors.white, // or any other bright color
-                            shadows: [
-                              Shadow(
-                                blurRadius: 5,
-                                color: Colors.black, // or any other dark color
-                                offset: Offset(1, 1),
-                              ),
-                            ],
-                          ),
+                        child: OnImageText(
+                          text: snapshot.data!.author,
+                          fontSize: 14,
                         ),
                       ),
                     ),
@@ -238,8 +296,10 @@ class _BookPageState extends State<BookPage> {
                       child: Row(
                         children: [
                           Expanded(
-                            child: Text(
-                              'Send exchange request to ${snapshot.data!.owner}',
+                            child: RegularText(
+                              text:
+                                  'Send exchange request to ${snapshot.data!.owner}',
+                              fontSize: 12,
                             ),
                           ),
                           Container(
@@ -269,7 +329,12 @@ class _BookPageState extends State<BookPage> {
                     ),
                     child: Row(
                       children: [
-                        Expanded(child: Text("Add to Wishlist")),
+                        Expanded(
+                          child: RegularText(
+                            text: "Add to Wishlist",
+                            fontSize: 12,
+                          ),
+                        ),
                         Container(
                           height: 55,
                           decoration: ShapeDecoration(
@@ -379,31 +444,12 @@ class _MediumBookCardState extends State<MediumBookCard> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       spacing: 1.5,
                       children: [
-                        Text(
-                          snapshot.data!.title,
-                          textAlign: TextAlign.left,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 16,
-                            fontFamily: 'Inter',
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
+                        RegularText(text: snapshot.data!.title, fontSize: 16),
                         Opacity(
                           opacity: 0.70,
-                          child: Text(
-                            'By ${snapshot.data!.author}',
-                            textAlign: TextAlign.left,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
+                          child: RegularText(
+                            text: snapshot.data!.author,
+                            fontSize: 14,
                           ),
                         ),
                         Opacity(
@@ -431,16 +477,9 @@ class _MediumBookCardState extends State<MediumBookCard> {
                         // TODO: Text should fill all the space it has. If text is bigger than container elipsis will be shown before the end
                         Opacity(
                           opacity: 0.70,
-                          child: Text(
-                            snapshot.data!.description,
-                            softWrap: true,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 12,
-                              fontFamily: 'Inter',
-                              fontWeight: FontWeight.w400,
-                            ),
+                          child: RegularText(
+                            text: snapshot.data!.description,
+                            fontSize: 14,
                           ),
                         ),
                       ],
@@ -553,16 +592,7 @@ class HomePage extends StatelessWidget {
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            'Recommendations',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: MediaQuery.sizeOf(context).width * 0.05,
-              fontFamily: 'Instrument Sans',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: SectionText(text: "Recommendations"),
         ),
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
         const LargeBookCard(),
@@ -584,16 +614,7 @@ class HomePage extends StatelessWidget {
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Text(
-            'Wishlist',
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: MediaQuery.sizeOf(context).width * 0.05,
-              fontFamily: 'Instrument Sans',
-              fontWeight: FontWeight.w700,
-            ),
-          ),
+          child: SectionText(text: 'Wishlist'),
         ),
         SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
         const SingleChildScrollView(
@@ -634,16 +655,7 @@ class LargeBookCard extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(left: width * 0.1),
-          child: const Text(
-            'Book Name - Owner',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w600,
-            ),
-          ),
+          child: OnImageText(text: 'Book 1', fontSize: 16),
         ),
       ],
     );
@@ -771,33 +783,11 @@ class _SmallBookCardState extends State<SmallBookCard> {
                   heigth: 154,
                 ),
                 const SizedBox(height: 8),
-                Text(
-                  snapshot.data!.title,
-                  textAlign: TextAlign.center,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Colors.black,
-                    fontSize: 14,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
+                RegularText(text: snapshot.data!.title, fontSize: 14),
                 const SizedBox(height: 4),
                 Opacity(
                   opacity: 0.70,
-                  child: Text(
-                    snapshot.data!.author,
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
-                      color: Colors.black,
-                      fontSize: 12,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
+                  child: RegularText(text: snapshot.data!.author, fontSize: 12),
                 ),
               ],
             ),
