@@ -595,11 +595,11 @@ class CatalogPage extends StatelessWidget {
               MediumBookCard(),
               MediumBookCard(),
               MediumBookCard(),
-              const Footer(),
             ],
           ),
         ],
       ),
+      bottomNavigationBar: Footer(),
     );
   }
 }
@@ -699,7 +699,7 @@ class Footer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery.sizeOf(context).height * 0.08;
+    final height = MediaQuery.sizeOf(context).height * 0.04;
     return Container(height: height, color: accentColor);
   }
 }
