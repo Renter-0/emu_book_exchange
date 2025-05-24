@@ -11,7 +11,6 @@ const accentColor = Color(0xFFCCE5E3);
 
 const server = "$jsonServer/image";
 
-
 /// Custom Text Widgets
 
 /// Styled to be visible on different backgrounds
@@ -201,7 +200,7 @@ class BookExchangeApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: const Color(0xF7F7F7F7),
       ),
-      home: Scaffold(body: SafeArea(child: ListView(children: [BookPage()]))),
+      home: Scaffold(body: SafeArea(child: ListView(children: [HomePage()]))),
     );
   }
 }
