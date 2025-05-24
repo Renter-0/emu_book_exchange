@@ -245,7 +245,7 @@ class _BookPageState extends State<BookPage> {
                             child: Container(
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: AssetImage('images/dictator.jpg'),
+                                  image: NetworkImage('$server/1'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
