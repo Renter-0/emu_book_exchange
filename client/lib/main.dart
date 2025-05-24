@@ -609,55 +609,57 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Header(),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SectionText(text: "Recommendations"),
-        ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
-        const LargeBookCard(),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-        const SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SizedBox(width: 16),
-              SmallBookCard(),
-              SizedBox(width: 16),
-              SmallBookCard(),
-              SizedBox(width: 16),
-              SmallBookCard(),
-              SizedBox(width: 16),
-            ],
+    return Scaffold(
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Header(),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SectionText(text: "Testings"),
           ),
-        ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: SectionText(text: 'Wishlist'),
-        ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
-        const SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              SizedBox(width: 16),
-              SmallBookCard(),
-              SizedBox(width: 16),
-              SmallBookCard(),
-              SizedBox(width: 16),
-              SmallBookCard(),
-              SizedBox(width: 16),
-            ],
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
+          const LargeBookCard(),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(width: 16),
+                SmallBookCard(),
+                SizedBox(width: 16),
+                SmallBookCard(),
+                SizedBox(width: 16),
+                SmallBookCard(),
+                SizedBox(width: 16),
+              ],
+            ),
           ),
-        ),
-        SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
-        const Footer(),
-      ],
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: SectionText(text: 'Wishlist'),
+          ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
+          const SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                SizedBox(width: 16),
+                SmallBookCard(),
+                SizedBox(width: 16),
+                SmallBookCard(),
+                SizedBox(width: 16),
+                SmallBookCard(),
+                SizedBox(width: 16),
+              ],
+            ),
+          ),
+          SizedBox(height: MediaQuery.sizeOf(context).height * 0.02),
+        ],
+      ),
+      bottomNavigationBar: Footer(),
     );
   }
 }
