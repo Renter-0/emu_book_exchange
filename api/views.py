@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse, FileResponse
+from django.http import JsonResponse, FileResponse
 from django.forms.models import model_to_dict
 from django.core import serializers
 from django.shortcuts import get_object_or_404
@@ -84,15 +84,14 @@ def get_image(request, image_id):
 
 def home(request):
     books = serializers.serialize("json", Book.objects.all()[:10])
-    return HttpResponse(books, content_type="application/json")
+    return JsonResponse(books)
 
 
 def catalog(request):
     books = serializers.serialize("json", Book.objects.order_by("pk").all())
-    return HttpResponse(books, content_type="application/json")
+    return JsonResponse(books)
 
 
 def book_page(request, book_id):
     book = get_object_or_404(Book, pk=book_id)
-    print(model_to_dict(book))
     return JsonResponse(model_to_dict(book))
