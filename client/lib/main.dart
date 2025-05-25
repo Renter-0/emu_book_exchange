@@ -375,9 +375,15 @@ class _BookPageState extends State<BookPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('Condition: ${snapshot.data!.condition}'),
-                          Text('Pages'),
-                          Text('Language:'),
+                          Text(
+                            'Condition: ${switch (snapshot.data!.condition) {
+                              'NW' => 'New',
+                              'UD' => 'Used',
+                              'OD' => 'Old',
+                              _ => '',
+                            }}',
+                          ),
+                          Text('Price: ${snapshot.data!.price}'),
                           Text('Description:\n${snapshot.data!.description}'),
                         ],
                       ),
