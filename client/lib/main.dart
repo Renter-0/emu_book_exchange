@@ -12,7 +12,6 @@ const jsonServer =
     '${String.fromEnvironment('SERVER', defaultValue: 'localhost')}/api';
 const server = "$jsonServer/image";
 
-
 /// Custom Text Widgets
 
 /// Styled to be visible on different backgrounds
@@ -220,7 +219,7 @@ class _BookPageState extends State<BookPage> {
   @override
   void initState() {
     super.initState();
-    futureBook = delay();
+    futureBook = fetchBook();
   }
 
   @override
@@ -413,10 +412,10 @@ class MediumBookCard extends StatefulWidget {
   State<MediumBookCard> createState() => _MediumBookCardState();
 }
 
-Future<Book> delay() async {
-  await Future.delayed(const Duration(seconds: 2));
-  return Book.fromJson(testBook);
-}
+// Future<Book> delay() async {
+//   await Future.delayed(const Duration(seconds: 2));
+//   return Book.fromJson(testBook);
+// }
 
 class _MediumBookCardState extends State<MediumBookCard> {
   late Future<Book> futureBook;
