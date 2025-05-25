@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 const jsonServer =
@@ -758,23 +759,120 @@ class Header extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 15),
-            Container(
-              width: 40,
-              height: 40,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x1A000000),
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
-              ),
-              child: const Icon(Icons.person, color: Colors.grey, size: 24),
+            ProfileButton(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ProfileButton extends StatelessWidget {
+  const ProfileButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: const [
+            BoxShadow(
+              color: Color(0x1A000000),
+              blurRadius: 4,
+              offset: Offset(0, 2),
             ),
           ],
+        ),
+        child: const Icon(Icons.person, color: Colors.grey, size: 24),
+      ),
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ProfilePage()),
+        );
+      },
+    );
+  }
+}
+
+class ProfilePage extends StatelessWidget {
+  const ProfilePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.sizeOf(context).height;
+    return Scaffold(
+      body: Center(
+        child: Column(
+          spacing: screenHeight * 0.03,
+          children: [
+            Container(
+              height: screenHeight * 0.05,
+              color: accentColor,
+              alignment: Alignment.topLeft,
+              child: BackButton(),
+            ),
+            Icon(Icons.person, color: Colors.grey, size: screenHeight * 0.1),
+            // TODO: Implement profile, password and name editing
+            Button(text: 'Edit Profile Picture'),
+            Button(text: 'Change Password'),
+            Button(text: 'Change Name'),
+            Button(
+              text: 'Exit App',
+              onTap: () {
+                SystemNavigator.pop();
+              },
+            ),
+            Button(color: const Color(0xFFE43535), text: 'Delete Account'),
+          ],
+        ),
+      ),
+      bottomNavigationBar: Container(
+        color: accentColor,
+        height: MediaQuery.sizeOf(context).height * 0.04,
+      ),
+    );
+  }
+}
+
+class Button extends StatelessWidget {
+  const Button({
+    super.key,
+    this.screenHeight,
+    this.screenWidth,
+    required this.text,
+    this.onTap,
+    this.color = accentColor,
+  });
+
+  final double? screenHeight;
+  final double? screenWidth;
+  final Color color;
+  final String text;
+  final void Function()? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: screenHeight ?? MediaQuery.sizeOf(context).height * 0.1,
+        width: screenWidth ?? MediaQuery.sizeOf(context).width * 0.5,
+        decoration: ShapeDecoration(
+          color: color,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(fontFamily: 'Inter', fontWeight: FontWeight.w600),
+          ),
         ),
       ),
     );
