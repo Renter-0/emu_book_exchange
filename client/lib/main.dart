@@ -201,7 +201,7 @@ class BookExchangeApp extends StatelessWidget {
       theme: ThemeData.light().copyWith(
         scaffoldBackgroundColor: const Color(0xF7F7F7F7),
       ),
-      home: Scaffold(body: SafeArea(child: ListView(children: [HomePage()]))),
+      home: Scaffold(body: SafeArea(child: HomePage())),
     );
   }
 }
@@ -610,14 +610,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      body: ListView(
         children: [
           const Header(),
           SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: SectionText(text: "Testings"),
+            child: SectionText(text: 'Recommendations'),
           ),
           SizedBox(height: MediaQuery.sizeOf(context).height * 0.01),
           const LargeBookCard(),
