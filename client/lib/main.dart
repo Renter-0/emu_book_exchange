@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
-const jsonServer =
-    "https://sunglasses-exotic-begun-assignments.trycloudflare.com/api";
 const accentColor = Color(0xFFCCE5E3);
 
+const jsonServer =
+    '${String.fromEnvironment('SERVER', defaultValue: 'localhost')}/api';
 const server = "$jsonServer/image";
+
 
 /// Custom Text Widgets
 
