@@ -8,6 +8,11 @@ wheels/
 
 # Virtual environments
 .venv
+.envrc
+.direnv
 
 # User uploaded files
 media
+
+# DB directory
+.data
